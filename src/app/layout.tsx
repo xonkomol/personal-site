@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Golos_Text, Unbounded } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -85,6 +86,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
         <SiteFooter />
         <MobileCallBar />
+
+        {/* Собирает реальные Core Web Vitals посетителей: LCP, CLS, INP, TTFB.
+            Данные видны во вкладке Speed Insights проекта на Vercel. */}
+        <SpeedInsights />
 
         {ym && (
           <Script id="yandex-metrika" strategy="afterInteractive">
