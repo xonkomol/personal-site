@@ -1,5 +1,4 @@
 import { Check, AlertTriangle } from "lucide-react";
-import { YoutubeEmbed } from "@/components/youtube-embed";
 import { site, formatSum } from "@/lib/site.config";
 
 export function HowTo() {
@@ -16,15 +15,12 @@ export function HowTo() {
             Как оформить европротокол?
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Посмотрите короткую инструкцию, а ниже — тот же порядок действий по пунктам. Если
-            что-то пойдёт не так, звоните: подскажем по телефону, пока комиссар едет.
+            Слева — порядок действий на месте ДТП, справа — условия, без которых страховая
+            не примет документы. Если что-то пойдёт не так, звоните: подскажем по телефону,
+            пока комиссар едет.
           </p>
 
-          <div className="mt-8">
-            <YoutubeEmbed videoId={howTo.videoId} title={howTo.videoTitle} />
-          </div>
-
-          <div className="mt-10 grid gap-8 md:grid-cols-2 md:gap-10">
+          <div className="mt-9 grid gap-8 md:grid-cols-2 md:gap-10">
             {/* Нумерация настоящая: каждый шаг идёт после предыдущего. */}
             <div>
               <h3 className="display-sm flex items-center gap-2">

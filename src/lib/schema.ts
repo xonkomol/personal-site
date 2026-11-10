@@ -113,18 +113,6 @@ export const howToSchema = () => ({
   })),
 });
 
-export const videoSchema = () =>
-  site.howTo.videoId
-    ? {
-        "@type": "VideoObject",
-        name: site.howTo.videoTitle,
-        description: site.howTo.videoTitle,
-        thumbnailUrl: `https://i.ytimg.com/vi/${site.howTo.videoId}/maxresdefault.jpg`,
-        embedUrl: `https://www.youtube-nocookie.com/embed/${site.howTo.videoId}`,
-        uploadDate: "2026-01-01",
-      }
-    : null;
-
 export const breadcrumbSchema = (items: { name: string; path: string }[]) => ({
   "@type": "BreadcrumbList",
   itemListElement: items.map((item, i) => ({

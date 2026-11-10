@@ -5,7 +5,7 @@ import { Price } from "@/components/sections/price";
 import { Urgent } from "@/components/sections/urgent";
 import { Consult } from "@/components/sections/consult";
 import { JsonLd } from "@/components/json-ld";
-import { graph, serviceSchema, howToSchema, videoSchema, breadcrumbSchema } from "@/lib/schema";
+import { graph, serviceSchema, howToSchema, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site.config";
 
@@ -22,7 +22,6 @@ export default function HomePage() {
         data={graph([
           serviceSchema(),
           howToSchema(),
-          videoSchema(),
           breadcrumbSchema([{ name: "Главная", path: "/" }]),
         ])}
       />
