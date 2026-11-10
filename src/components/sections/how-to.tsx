@@ -6,23 +6,28 @@ export function HowTo() {
   const { howTo } = site;
 
   return (
-    <section id="how-to" className="scroll-mt-20 bg-plaster py-20 lg:py-24">
+    <section id="how-to" className="scroll-mt-20 bg-plaster py-14 sm:py-20 lg:py-24">
       <div className="shell">
-        <h2 className="display-lg max-w-2xl text-balance">Как оформить европротокол</h2>
-        <p className="prose-measure mt-5 text-lg text-muted-foreground">
+        <h2 data-reveal-item className="display-lg max-w-2xl text-balance">Как оформить европротокол</h2>
+        <p data-reveal-item className="prose-measure mt-4 text-base text-muted-foreground sm:mt-5 sm:text-lg">
           Посмотрите короткую инструкцию, а ниже — тот же порядок действий по пунктам. Если что-то
           пойдёт не так, звоните: подскажем по телефону, пока комиссар едет.
         </p>
 
-        <div className="mt-10 lg:max-w-4xl">
+        <div data-reveal-item className="mt-8 sm:mt-10 lg:max-w-4xl">
           <YoutubeEmbed videoId={howTo.videoId} title={howTo.videoTitle} />
         </div>
 
         {/* Нумерация здесь настоящая: каждый шаг идёт после предыдущего. */}
-        <ol className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-2">
+        <ol className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:mt-12 md:grid-cols-2">
           {howTo.steps.map((step, i) => (
-            <li key={step.title} className="flex gap-5 bg-background p-6">
-              <span className="font-display text-sm font-bold text-tile tnum">
+            <li
+              key={step.title}
+              data-reveal-item
+              style={{ "--reveal-shift": `${(i % 2) * 6}%` } as React.CSSProperties}
+              className="group flex gap-4 bg-background p-5 transition-colors hover:bg-secondary sm:gap-5 sm:p-6"
+            >
+              <span className="font-display text-sm font-bold text-tile tnum transition-transform group-hover:scale-110">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
@@ -35,7 +40,7 @@ export function HowTo() {
           ))}
         </ol>
 
-        <div className="mt-8 rounded-xl border border-border bg-card p-7">
+        <div data-reveal-item className="mt-8 rounded-xl border border-border bg-card p-6 sm:p-7">
           <h3 className="display-sm">Когда европротокол подходит</h3>
           <p className="mt-2 text-sm text-muted-foreground">
             Все условия должны выполняться одновременно. Если хотя бы одно не соблюдено, нужно

@@ -7,16 +7,16 @@ export function Price() {
   const { pricing } = site;
 
   return (
-    <section id="price" className="scroll-mt-20 py-20 lg:py-24">
+    <section id="price" className="scroll-mt-20 py-14 sm:py-20 lg:py-24">
       <div className="shell">
-        <h2 className="display-lg max-w-2xl text-balance">Стоимость услуги</h2>
-        <p className="prose-measure mt-5 text-lg text-muted-foreground">
+        <h2 data-reveal-item className="display-lg max-w-2xl text-balance">Стоимость услуги</h2>
+        <p data-reveal-item className="prose-measure mt-4 text-base text-muted-foreground sm:mt-5 sm:text-lg">
           Одна сумма за полное оформление европротокола на месте ДТП: выезд, осмотр, фотофиксация
           и документы для страховой.
         </p>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
-          <div className="rounded-xl border border-border bg-card p-7 lg:p-9">
+        <div className="mt-8 grid gap-4 sm:mt-12 sm:gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+          <div data-reveal-item className="rounded-xl border border-border bg-card p-6 sm:p-7 lg:p-9">
             <p className="font-display text-4xl font-bold tracking-tight tnum lg:text-5xl">
               {formatSum(pricing.price)}
             </p>
@@ -50,7 +50,11 @@ export function Price() {
           </div>
 
           <div className="flex flex-col gap-5">
-            <div className="rounded-xl bg-tile-deep p-7 text-white">
+            <div
+              data-reveal-item
+              style={{ "--reveal-shift": "7%" } as React.CSSProperties}
+              className="brand-gradient brand-edge rounded-xl p-6 text-white sm:p-7"
+            >
               <p className="display-sm">Нужен комиссар сейчас</p>
               <p className="mt-2 text-sm text-white/75">
                 Позвоните — экипаж выедет сразу, в среднем доезжаем за {site.contacts.arrival}.
@@ -58,7 +62,7 @@ export function Price() {
               <Button
                 asChild
                 size="lg"
-                className="mt-6 w-full bg-accent text-accent-foreground hover:bg-accent/90"
+                className="pulse-call lift mt-6 w-full bg-accent text-accent-foreground hover:bg-accent/90"
               >
                 <a href={`tel:${site.contacts.phone}`}>
                   <Phone className="size-4" />
@@ -67,7 +71,11 @@ export function Price() {
               </Button>
             </div>
 
-            <div className="rounded-xl border border-border bg-card p-7">
+            <div
+              data-reveal-item
+              style={{ "--reveal-shift": "14%" } as React.CSSProperties}
+              className="rounded-xl border border-border bg-card p-6 sm:p-7"
+            >
               <p className="display-sm">Где мы находимся</p>
               <p className="mt-2 text-sm text-muted-foreground">
                 Диспетчерская работает круглосуточно. Приезжать к нам не нужно — комиссар сам

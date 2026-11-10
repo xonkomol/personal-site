@@ -34,6 +34,7 @@ export function SiteHeader() {
             width={1000}
             height={260}
             priority
+            loading="eager"
             className="h-8 w-auto lg:h-10"
           />
         </Link>
@@ -108,7 +109,7 @@ export function SiteHeader() {
                 <Button asChild size="lg" variant="outline">
                   <a href={site.contacts.telegram}>
                     <Send className="size-4" />
-                    {site.contacts.telegramLabel}
+                    Написать в Telegram
                   </a>
                 </Button>
               </div>

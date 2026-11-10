@@ -10,7 +10,7 @@ export async function SiteFooter() {
   cacheLife("days");
 
   return (
-    <footer id="contacts" className="mt-auto scroll-mt-20 bg-tile-deep text-white/80">
+    <footer id="contacts" className="brand-gradient-soft mt-auto scroll-mt-20 text-white/80">
       <div className="shell grid gap-12 py-16 lg:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           {/* Логотип тёмный, поэтому на тёмном фоне выводим его белым. */}
@@ -19,6 +19,7 @@ export async function SiteFooter() {
             alt={site.brand.logoAlt}
             width={1000}
             height={260}
+            loading="eager"
             className="h-9 w-auto brightness-0 invert"
           />
           <p className="mt-5 max-w-sm text-sm leading-relaxed">{site.footerNote}</p>

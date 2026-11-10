@@ -16,6 +16,12 @@ import {
 import { pageMetadata } from "@/lib/seo";
 import { site, getDistrict, formatSum } from "@/lib/site.config";
 
+/**
+ * Страница целиком зависит от района, поэтому отдаём её одним статическим
+ * документом, а не оболочкой с дозагрузкой. Так HTML приходит сразу и целиком.
+ */
+export const instant = false;
+
 /** Все страницы районов собираются статически на этапе сборки. */
 export function generateStaticParams() {
   return site.districts.map((d) => ({ district: d.slug }));
@@ -86,7 +92,7 @@ export default async function DistrictPage({ params }: PageProps<"/rayon/[distri
       <Hero district={district} />
 
       {/* Уникальный текст под район: без него страницы считаются дублями. */}
-      <section className="py-20 lg:py-24">
+      <section className="py-14 sm:py-20 lg:py-24">
         <div className="shell grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div>
             <h2 className="display-lg text-balance">
