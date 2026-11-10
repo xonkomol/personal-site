@@ -4,7 +4,7 @@ import { site } from "./site.config";
 const base = site.url.replace(/\/$/, "");
 
 /** Один вид адреса во всех мета-тегах и в sitemap — иначе поиск видит дубли. */
-export const canonical = (path = "/") => (path === "/" ? `${base}/` : `${base}${path}`);
+export const canonical = (path = "/") => (path === "/" ? base : `${base}${path}`);
 
 type PageMetaInput = {
   title: string;
