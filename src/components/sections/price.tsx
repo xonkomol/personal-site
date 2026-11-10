@@ -1,6 +1,6 @@
 import { Check, Phone, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LeadForm } from "@/components/lead-form";
+import { YandexMap } from "@/components/yandex-map";
 import { site, formatSum } from "@/lib/site.config";
 
 export function Price() {
@@ -68,11 +68,12 @@ export function Price() {
             </div>
 
             <div className="rounded-xl border border-border bg-card p-7">
-              <p className="display-sm">Заказать обратный звонок</p>
+              <p className="display-sm">Где мы находимся</p>
               <p className="mt-2 text-sm text-muted-foreground">
-                Оставьте номер — перезвоним и ответим на вопросы по оформлению.
+                Диспетчерская работает круглосуточно. Приезжать к нам не нужно — комиссар сам
+                выезжает на место ДТП.
               </p>
-              <LeadForm source="price" className="mt-6" submitLabel="Жду звонка" />
+              <YandexMap className="mt-6" />
             </div>
           </div>
         </div>
