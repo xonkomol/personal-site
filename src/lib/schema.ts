@@ -1,37 +1,40 @@
-import { site, type City } from "./site.config";
+import { site, type District } from "./site.config";
 import { canonical } from "./seo";
 
 /**
  * Микроразметка schema.org. Яндекс и Google берут отсюда адрес, телефон,
- * рейтинг, цены и вопросы — это то, что даёт расширенный сниппет в выдаче.
+ * часы работы, цену и шаги инструкции — это даёт расширенный сниппет в выдаче.
  */
 
 const ORG_ID = `${site.url}/#organization`;
 const SITE_ID = `${site.url}/#website`;
 
-const postalAddress = (city: string = site.address.city) => ({
+const postalAddress = () => ({
   "@type": "PostalAddress",
   streetAddress: site.address.street,
-  addressLocality: city,
+  addressLocality: site.address.city,
   addressRegion: site.address.region,
   postalCode: site.address.postalCode,
   addressCountry: site.locale.country,
 });
 
+const openingHours = () =>
+  site.contacts.hours.map((h) => {
+    const [days, time] = h.split(" ");
+    const [opens, closes] = time.split("-");
+    return { "@type": "OpeningHoursSpecification", dayOfWeek: days, opens, closes };
+  });
+
 export const organizationSchema = () => ({
-  "@type": ["Organization", "ProfessionalService"],
+  "@type": ["Organization", "LocalBusiness", "AutomotiveBusiness"],
   "@id": ORG_ID,
   name: site.brand.name,
   legalName: site.brand.legalName,
+  slogan: site.brand.tagline,
   description: site.seo.description,
   url: site.url,
-  logo: `${site.url}/icon.svg`,
+  logo: `${site.url}${site.brand.logo}`,
   image: `${site.url}/opengraph-image`,
-  foundingDate: String(site.brand.foundedYear),
-  numberOfEmployees: { "@type": "QuantitativeValue", value: site.brand.employees },
-  priceRange: site.locale.priceRange,
-  currenciesAccepted: site.locale.currency,
-  paymentAccepted: "Безналичный расчёт, Payme, Click",
   telephone: site.contacts.phone,
   email: site.contacts.email,
   address: postalAddress(),
@@ -40,36 +43,21 @@ export const organizationSchema = () => ({
     latitude: site.address.coords.lat,
     longitude: site.address.coords.lng,
   },
-  openingHoursSpecification: site.contacts.hours.map((h) => {
-    const [days, time] = h.split(" ");
-    const [opens, closes] = time.split("-");
-    return {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: days,
-      opens,
-      closes,
-    };
-  }),
-  sameAs: [site.contacts.telegram, site.contacts.instagram],
-  areaServed: site.cities.map((c) => ({
-    "@type": "City",
-    name: c.name,
-    containedInPlace: { "@type": "Country", name: site.locale.countryName },
+  openingHoursSpecification: openingHours(),
+  sameAs: [site.contacts.telegram],
+  areaServed: site.districts.map((d) => ({
+    "@type": "AdministrativeArea",
+    name: d.name,
+    containedInPlace: { "@type": "City", name: site.address.city },
   })),
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: site.rating.value,
-    reviewCount: site.rating.count,
-    bestRating: 5,
-    worstRating: 1,
-  },
   contactPoint: [
     {
       "@type": "ContactPoint",
       telephone: site.contacts.phone,
-      contactType: "sales",
+      contactType: "emergency",
       areaServed: site.locale.country,
-      availableLanguage: ["ru", "uz", "en"],
+      availableLanguage: ["ru", "uz"],
+      hoursAvailable: openingHours(),
     },
   ],
 });
@@ -83,43 +71,59 @@ export const websiteSchema = () => ({
   publisher: { "@id": ORG_ID },
 });
 
-export const serviceSchemas = (city?: City) =>
-  site.services.map((s) => ({
-    "@type": "Service",
-    name: city ? `${s.title} — ${city.name}` : s.title,
-    description: s.short,
-    serviceType: s.title,
-    provider: { "@id": ORG_ID },
-    areaServed: {
-      "@type": "City",
-      name: city?.name ?? site.address.city,
-    },
-    offers: {
-      "@type": "Offer",
-      price: s.priceFrom,
-      priceCurrency: site.locale.currency,
-      availability: "https://schema.org/InStock",
-      url: canonical(city ? `/uslugi/${city.slug}` : "/#services"),
-    },
-  }));
+export const serviceSchema = (district?: District) => ({
+  "@type": "Service",
+  name: district
+    ? `Оформление европротокола в ${district.inCity}`
+    : `Оформление европротокола в ${site.address.inCity}`,
+  serviceType: "Услуги аварийного комиссара",
+  description: site.seo.description,
+  provider: { "@id": ORG_ID },
+  areaServed: district
+    ? { "@type": "AdministrativeArea", name: district.name }
+    : { "@type": "City", name: site.address.city },
+  hoursAvailable: openingHours(),
+  offers: {
+    "@type": "Offer",
+    price: site.pricing.price,
+    priceCurrency: site.locale.currency,
+    availability: "https://schema.org/InStock",
+    url: canonical(district ? `/rayon/${district.slug}` : "/#price"),
+    itemOffered: site.pricing.includes.map((name) => ({ "@type": "Service", name })),
+  },
+});
 
-export const faqSchema = () => ({
-  "@type": "FAQPage",
-  mainEntity: site.faq.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
+/** Пошаговая инструкция: Яндекс показывает такие шаги прямо в выдаче. */
+export const howToSchema = () => ({
+  "@type": "HowTo",
+  name: "Как оформить европротокол при ДТП в Узбекистане",
+  description:
+    "Порядок действий на месте ДТП: от аварийной сигнализации до выплаты страховой компании.",
+  totalTime: "PT30M",
+  estimatedCost: {
+    "@type": "MonetaryAmount",
+    currency: site.locale.currency,
+    value: site.pricing.price,
+  },
+  step: site.howTo.steps.map((s, i) => ({
+    "@type": "HowToStep",
+    position: i + 1,
+    name: s.title,
+    text: s.text,
   })),
 });
 
-export const reviewsSchema = () =>
-  site.testimonials.map((t) => ({
-    "@type": "Review",
-    itemReviewed: { "@id": ORG_ID },
-    author: { "@type": "Person", name: t.name },
-    reviewRating: { "@type": "Rating", ratingValue: t.rating, bestRating: 5 },
-    reviewBody: t.text,
-  }));
+export const videoSchema = () =>
+  site.howTo.videoId
+    ? {
+        "@type": "VideoObject",
+        name: site.howTo.videoTitle,
+        description: site.howTo.videoTitle,
+        thumbnailUrl: `https://i.ytimg.com/vi/${site.howTo.videoId}/maxresdefault.jpg`,
+        embedUrl: `https://www.youtube-nocookie.com/embed/${site.howTo.videoId}`,
+        uploadDate: "2026-01-01",
+      }
+    : null;
 
 export const breadcrumbSchema = (items: { name: string; path: string }[]) => ({
   "@type": "BreadcrumbList",
@@ -131,37 +135,30 @@ export const breadcrumbSchema = (items: { name: string; path: string }[]) => ({
   })),
 });
 
-export const localBusinessSchema = (city: City) => ({
-  "@type": "ProfessionalService",
-  "@id": `${canonical(`/uslugi/${city.slug}`)}#business`,
-  name: `${site.brand.name} — ${city.name}`,
-  description: city.intro,
+export const districtBusinessSchema = (district: District) => ({
+  "@type": ["LocalBusiness", "AutomotiveBusiness"],
+  "@id": `${canonical(`/rayon/${district.slug}`)}#business`,
+  name: `${site.brand.name} — ${district.name}`,
+  description: district.intro,
   parentOrganization: { "@id": ORG_ID },
-  url: canonical(`/uslugi/${city.slug}`),
-  telephone: city.phone ?? site.contacts.phone,
-  priceRange: site.locale.priceRange,
+  url: canonical(`/rayon/${district.slug}`),
+  telephone: site.contacts.phone,
   image: `${site.url}/opengraph-image`,
-  address: postalAddress(city.name),
+  address: postalAddress(),
   geo: {
     "@type": "GeoCoordinates",
-    latitude: city.coords.lat,
-    longitude: city.coords.lng,
+    latitude: district.coords.lat,
+    longitude: district.coords.lng,
   },
+  openingHoursSpecification: openingHours(),
   areaServed: [
-    { "@type": "City", name: city.name },
-    { "@type": "AdministrativeArea", name: city.region },
-    ...city.districts.map((d) => ({ "@type": "Place", name: d })),
+    { "@type": "AdministrativeArea", name: district.name },
+    ...district.landmarks.map((l) => ({ "@type": "Place", name: l })),
   ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: site.rating.value,
-    reviewCount: site.rating.count,
-    bestRating: 5,
-  },
 });
 
 /** Собирает один @graph — так поисковики связывают сущности между собой. */
-export const graph = (nodes: object[]) => ({
+export const graph = (nodes: (object | null)[]) => ({
   "@context": "https://schema.org",
-  "@graph": nodes,
+  "@graph": nodes.filter(Boolean),
 });

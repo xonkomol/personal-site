@@ -71,7 +71,7 @@ export async function submitLead(
 
     return {
       status: "ok",
-      message: `Заявка принята. Перезвоним в течение ${site.contacts.responseTime}.`,
+      message: `Заявка принята. Перезвоним в ближайшие минуты.`,
     };
   } catch (error) {
     console.error("[lead] не удалось доставить заявку:", error);

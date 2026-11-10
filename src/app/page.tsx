@@ -1,21 +1,9 @@
 import { Hero } from "@/components/sections/hero";
-import { Pains } from "@/components/sections/pains";
-import { Services } from "@/components/sections/services";
-import { Process } from "@/components/sections/process";
-import { Cases } from "@/components/sections/cases";
-import { Pricing } from "@/components/sections/pricing";
-import { Testimonials } from "@/components/sections/testimonials";
-import { Geo } from "@/components/sections/geo";
-import { Faq } from "@/components/sections/faq";
-import { FinalCta } from "@/components/sections/final-cta";
+import { Advantages } from "@/components/sections/advantages";
+import { HowTo } from "@/components/sections/how-to";
+import { Price } from "@/components/sections/price";
 import { JsonLd } from "@/components/json-ld";
-import {
-  graph,
-  faqSchema,
-  serviceSchemas,
-  reviewsSchema,
-  breadcrumbSchema,
-} from "@/lib/schema";
+import { graph, serviceSchema, howToSchema, videoSchema, breadcrumbSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site.config";
 
@@ -30,22 +18,16 @@ export default function HomePage() {
     <>
       <JsonLd
         data={graph([
-          ...serviceSchemas(),
-          faqSchema(),
-          ...reviewsSchema(),
+          serviceSchema(),
+          howToSchema(),
+          videoSchema(),
           breadcrumbSchema([{ name: "Главная", path: "/" }]),
         ])}
       />
       <Hero />
-      <Pains />
-      <Services />
-      <Process />
-      <Cases />
-      <Pricing />
-      <Testimonials />
-      <Geo />
-      <Faq />
-      <FinalCta />
+      <Advantages />
+      <HowTo />
+      <Price />
     </>
   );
 }

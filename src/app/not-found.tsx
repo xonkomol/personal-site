@@ -14,7 +14,7 @@ export default function NotFound() {
         <p className="font-display text-sm font-bold text-tile tnum">404</p>
         <h1 className="display-lg mt-3 text-balance">Такой страницы на сайте нет</h1>
         <p className="mt-5 text-lg text-muted-foreground">
-          Возможно, адрес изменился. Начните с главной или выберите свой город.
+          Возможно, адрес изменился. Вернитесь на главную или позвоните — ответим круглосуточно.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -22,7 +22,7 @@ export default function NotFound() {
             <Link href="/">На главную</Link>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <Link href="/#geo">Выбрать город</Link>
+            <Link href="/#how-to">Как оформить европротокол</Link>
           </Button>
         </div>
 

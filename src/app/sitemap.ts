@@ -16,12 +16,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 1,
     },
-    ...site.cities.map((city) => ({
-      url: canonical(`/uslugi/${city.slug}`),
+    ...site.districts.map((district) => ({
+      url: canonical(`/rayon/${district.slug}`),
       lastModified: now,
       changeFrequency: "monthly" as const,
-      // Столица — основной спрос, поэтому приоритет выше.
-      priority: city.slug === "tashkent" ? 0.9 : 0.7,
+      priority: 0.8,
     })),
   ];
 }

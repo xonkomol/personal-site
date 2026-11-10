@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, Phone, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,27 +12,30 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { StarMark } from "@/components/tilework";
 import { site } from "@/lib/site.config";
 
 const nav = [
-  { label: "Услуги", href: "/#services" },
-  { label: "Как работаем", href: "/#process" },
-  { label: "Результаты", href: "/#cases" },
-  { label: "Цены", href: "/#pricing" },
-  { label: "Города", href: "/#geo" },
-  { label: "Вопросы", href: "/#faq" },
+  { label: "Преимущества", href: "/#advantages" },
+  { label: "Как оформить", href: "/#how-to" },
+  { label: "Стоимость", href: "/#price" },
+  { label: "Контакты", href: "/#contacts" },
 ];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-md">
-      <div className="shell flex h-16 items-center justify-between gap-6">
-        <Link href="/" className="flex items-center gap-2.5" aria-label={`${site.brand.name} — на главную`}>
-          <StarMark className="size-6 text-tile" />
-          <span className="font-display text-base font-bold tracking-tight">{site.brand.name}</span>
+    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
+      <div className="shell flex h-16 items-center justify-between gap-6 lg:h-20">
+        <Link href="/" aria-label={`${site.brand.name} — на главную`}>
+          <Image
+            src={site.brand.logo}
+            alt={site.brand.logoAlt}
+            width={1000}
+            height={260}
+            priority
+            className="h-8 w-auto lg:h-10"
+          />
         </Link>
 
         <nav aria-label="Основные разделы" className="hidden lg:block">
@@ -52,12 +56,15 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <a
             href={`tel:${site.contacts.phone}`}
-            className="hidden text-sm font-medium tnum md:block"
+            className="hidden font-display text-base font-bold tracking-tight tnum md:block"
           >
             {site.contacts.phoneLabel}
           </a>
-          <Button asChild size="sm" className="hidden md:inline-flex">
-            <a href="#lead">Обсудить задачу</a>
+          <Button asChild size="sm" className="hidden bg-accent text-accent-foreground hover:bg-accent/90 md:inline-flex">
+            <a href={site.contacts.telegram}>
+              <Send className="size-4" />
+              Telegram
+            </a>
           </Button>
 
           <Button asChild size="icon" variant="outline" className="md:hidden" aria-label="Позвонить">
@@ -92,7 +99,7 @@ export function SiteHeader() {
                 </ul>
               </nav>
               <div className="mt-auto flex flex-col gap-3 p-4">
-                <Button asChild size="lg">
+                <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
                   <a href={`tel:${site.contacts.phone}`}>
                     <Phone className="size-4" />
                     {site.contacts.phoneLabel}
@@ -101,7 +108,7 @@ export function SiteHeader() {
                 <Button asChild size="lg" variant="outline">
                   <a href={site.contacts.telegram}>
                     <Send className="size-4" />
-                    Написать в Telegram
+                    {site.contacts.telegramLabel}
                   </a>
                 </Button>
               </div>

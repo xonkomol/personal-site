@@ -109,23 +109,6 @@ export function LeadForm({
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <Label htmlFor={`${uid}-service`}>Что нужно</Label>
-        <select
-          id={`${uid}-service`}
-          name="service"
-          defaultValue={site.services[0].title}
-          className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
-        >
-          {site.services.map((s) => (
-            <option key={s.slug} value={s.title}>
-              {s.title}
-            </option>
-          ))}
-          <option value="Другое">Пока не определились</option>
-        </select>
-      </div>
-
       {withComment && (
         <div className="flex flex-col gap-2">
           <Label htmlFor={`${uid}-comment`}>Задача в двух словах</Label>
@@ -133,7 +116,7 @@ export function LeadForm({
             id={`${uid}-comment`}
             name="comment"
             rows={3}
-            placeholder="Продаём кухни на заказ, сайт есть, заявок мало."
+            placeholder="Столкновение на Амира Темура, две машины, пострадавших нет."
           />
         </div>
       )}
@@ -157,8 +140,7 @@ export function LeadForm({
 
       <p className="flex items-start gap-2 text-xs leading-relaxed text-muted-foreground">
         <Lock className="mt-0.5 size-3.5 shrink-0" />
-        Перезвоним в течение {site.contacts.responseTime} в рабочее время. Номер не передаём третьим
-        лицам и не добавляем в рассылки.
+        Перезваниваем круглосуточно. Номер не передаём третьим лицам и не добавляем в рассылки.
       </p>
     </form>
   );

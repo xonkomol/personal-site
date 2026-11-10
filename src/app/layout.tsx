@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   other: {
     /** Географические мета-теги: сигнал для локального поиска и карт. */
-    "geo.region": `${site.locale.country}-TK`,
+    "geo.region": "UZ-TK",
     "geo.placename": site.address.city,
     "geo.position": `${site.address.coords.lat};${site.address.coords.lng}`,
     ICBM: `${site.address.coords.lat}, ${site.address.coords.lng}`,
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a3457",
+  themeColor: "#0b1f33",
   colorScheme: "light",
 };
 
