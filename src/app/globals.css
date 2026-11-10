@@ -20,6 +20,7 @@
   --color-tile: var(--tile);
   --color-tile-deep: var(--tile-deep);
   --color-gold: var(--gold);
+  --color-royal: var(--royal);
 
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -70,8 +71,9 @@
   --ink: #0d1f2d;
   --plaster: #eef3f7;
   --tile: #0b7cb0;
-  --tile-deep: #0a2550;
-  --gold: #e59216;
+  --tile-deep: #081c47;
+  --royal: #1d47c9;
+  --gold: #e8a21c;
 
   --background: #ffffff;
   --foreground: #0d1f2d;
@@ -85,8 +87,8 @@
   --secondary-foreground: #0d1f2d;
   --muted: #f0f4f7;
   --muted-foreground: #55697a;
-  --accent: #e59216;
-  --accent-foreground: #231201;
+  --accent: #e8a21c;
+  --accent-foreground: #231501;
   --destructive: #b63434;
   --border: #dbe4ea;
   --input: #cfdae3;
@@ -113,7 +115,8 @@
   --ink: #f2f7fa;
   --plaster: #11293d;
   --tile: #37a0d4;
-  --tile-deep: #061a38;
+  --tile-deep: #05112c;
+  --royal: #2f5ae0;
   --gold: #f0a93a;
 
   --background: #071624;
@@ -212,14 +215,51 @@
   /* Фирменный фон: тёмно-синий градиент с подсветкой цветом логотипа. */
   .brand-gradient {
     background:
-      radial-gradient(100% 70% at 50% -5%, rgba(11, 124, 176, 0.5) 0%, transparent 60%),
-      radial-gradient(70% 50% at 100% 100%, rgba(18, 70, 150, 0.55) 0%, transparent 65%),
-      linear-gradient(170deg, #0d2f68 0%, #0a2550 45%, #071d3f 100%);
+      radial-gradient(85% 60% at 50% 0%, rgba(29, 71, 201, 0.55) 0%, transparent 62%),
+      radial-gradient(60% 45% at 85% 100%, rgba(11, 124, 176, 0.4) 0%, transparent 70%),
+      linear-gradient(175deg, #0c2a72 0%, #0a1f55 48%, #071634 100%);
+  }
+
+  /* Яркая синяя плашка — как блок «Нужна срочная помощь?» в макете. */
+  .royal-gradient {
+    background: linear-gradient(135deg, #2a5ae6 0%, #1d47c9 45%, #1536a8 100%);
   }
   .brand-gradient-soft {
     background:
-      radial-gradient(90% 80% at 15% 0%, rgba(11, 124, 176, 0.42) 0%, transparent 62%),
-      linear-gradient(160deg, #0b2a5c 0%, #081f44 100%);
+      radial-gradient(80% 70% at 20% 0%, rgba(29, 71, 201, 0.45) 0%, transparent 65%),
+      linear-gradient(160deg, #0a2258 0%, #071634 100%);
+  }
+
+  /* Стеклянная панель поверх градиента. */
+  .glass {
+    background: rgb(255 255 255 / 0.07);
+    border: 1px solid rgb(255 255 255 / 0.14);
+    backdrop-filter: blur(6px);
+  }
+
+  /* Прописные заголовки макета. */
+  .display-caps {
+    font-family: var(--font-head);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+
+  .eyebrow-gold {
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+}
+
+@layer components {
+  /* Общая обёртка карточек-секций: в макете они уже полной ширины. */
+  .panel {
+    width: 100%;
+    max-width: 64rem;
+    margin-inline: auto;
   }
 
   /* Тонкая светлая рамка поверх градиента. */
@@ -290,7 +330,7 @@
   [data-reveal-item] {
     animation: rise-in 1s linear both;
     animation-timeline: view();
-    animation-range: entry 0% cover calc(26% + var(--reveal-shift, 0%));
+    animation-range: entry var(--reveal-shift, 0%) entry 95%;
   }
 }
 

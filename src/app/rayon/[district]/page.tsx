@@ -5,6 +5,8 @@ import { Hero } from "@/components/sections/hero";
 import { Advantages } from "@/components/sections/advantages";
 import { HowTo } from "@/components/sections/how-to";
 import { Price } from "@/components/sections/price";
+import { Urgent } from "@/components/sections/urgent";
+import { Consult } from "@/components/sections/consult";
 import { JsonLd } from "@/components/json-ld";
 import {
   graph,
@@ -160,8 +162,10 @@ export default async function DistrictPage({ params }: PageProps<"/rayon/[distri
       </section>
 
       <Advantages />
+      <Urgent />
       <HowTo />
       <Price />
+      <Consult />
     </>
   );
 }

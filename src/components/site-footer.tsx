@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cacheLife } from "next/cache";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Send } from "lucide-react";
 import { site } from "@/lib/site.config";
 
 export async function SiteFooter() {
@@ -10,9 +10,9 @@ export async function SiteFooter() {
   cacheLife("days");
 
   return (
-    <footer id="contacts" className="brand-gradient-soft mt-auto scroll-mt-20 text-white/80">
-      <div className="shell grid gap-12 py-16 lg:grid-cols-[1.4fr_1fr_1fr]">
-        <div>
+    <footer className="mt-auto bg-tile-deep text-white/75">
+      <div className="shell grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="sm:col-span-2 lg:col-span-1">
           {/* Логотип тёмный, поэтому на тёмном фоне выводим его белым. */}
           <Image
             src={site.brand.logo}
@@ -20,13 +20,15 @@ export async function SiteFooter() {
             width={1000}
             height={260}
             loading="eager"
-            className="h-9 w-auto brightness-0 invert"
+            className="h-8 w-auto brightness-0 invert"
           />
-          <p className="mt-5 max-w-sm text-sm leading-relaxed">{site.footerNote}</p>
+          <p className="mt-4 max-w-sm text-sm leading-relaxed">{site.footerNote}</p>
         </div>
 
         <address className="not-italic">
-          <h2 className="font-display text-sm font-semibold text-white">Контакты</h2>
+          <h2 className="font-display text-sm font-bold uppercase tracking-wide text-accent">
+            Контакты
+          </h2>
           <ul className="mt-4 flex flex-col gap-3 text-sm">
             <li className="flex gap-2.5">
               <Phone className="mt-0.5 size-4 shrink-0" />
@@ -52,23 +54,45 @@ export async function SiteFooter() {
               </a>
             </li>
             <li className="flex gap-2.5">
-              <Clock className="mt-0.5 size-4 shrink-0" />
-              <span>{site.contacts.hoursLabel}</span>
-            </li>
-            <li className="flex gap-2.5">
               <MapPin className="mt-0.5 size-4 shrink-0" />
               <span>
                 {site.address.city}, {site.address.street}
                 <br />
-                <span className="text-white/60">{site.address.street2}</span>
+                <span className="text-white/55">{site.address.street2}</span>
               </span>
             </li>
           </ul>
         </address>
 
-        <nav aria-label="Районы Ташкента">
-          <h2 className="font-display text-sm font-semibold text-white">Выезжаем в районы</h2>
+        <nav aria-label="Услуги">
+          <h2 className="font-display text-sm font-bold uppercase tracking-wide text-accent">
+            Услуги
+          </h2>
           <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+            {site.footerServices.map((s) => (
+              <li key={s}>
+                <Link href="/#price" className="transition-colors hover:text-white">
+                  {s}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <h2 className="font-display text-sm font-bold uppercase tracking-wide text-accent">
+            Режим работы
+          </h2>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+            <li>{site.contacts.hoursLabel}</li>
+            <li>Выезд в течение {site.contacts.arrival}</li>
+            <li className="text-white/55">Без праздничных наценок</li>
+          </ul>
+
+          <h2 className="mt-7 font-display text-sm font-bold uppercase tracking-wide text-accent">
+            Районы
+          </h2>
+          <ul className="mt-4 flex flex-wrap gap-x-3 gap-y-2 text-sm">
             {site.districts.map((d) => (
               <li key={d.slug}>
                 <Link href={`/rayon/${d.slug}`} className="transition-colors hover:text-white">
@@ -77,12 +101,12 @@ export async function SiteFooter() {
               </li>
             ))}
           </ul>
-        </nav>
+        </div>
       </div>
 
-      <div className="shell flex flex-col gap-2 border-t border-white/15 py-6 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
+      <div className="shell flex flex-col gap-2 border-t border-white/12 py-5 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
         <p>
-          © {new Date().getFullYear()} {site.brand.legalName}
+          © {new Date().getFullYear()} {site.brand.legalName}. Все права защищены.
         </p>
         <p>{site.brand.tagline}</p>
       </div>

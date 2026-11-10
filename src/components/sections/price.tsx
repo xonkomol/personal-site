@@ -1,89 +1,100 @@
-import { Check, Phone, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { YandexMap } from "@/components/yandex-map";
+import { Check, Plus, Phone, Send, MapPin } from "lucide-react";
 import { site, formatSum } from "@/lib/site.config";
 
 export function Price() {
   const { pricing } = site;
 
+  const contacts = [
+    {
+      icon: Phone,
+      title: "Позвонить",
+      text: site.contacts.phoneLabel,
+      href: `tel:${site.contacts.phone}`,
+      tone: "bg-accent/15 text-accent",
+    },
+    {
+      icon: Send,
+      title: "Telegram",
+      text: "Ответим в переписке",
+      href: site.contacts.telegram,
+      tone: "bg-tile/15 text-tile",
+    },
+    {
+      icon: MapPin,
+      title: "Офис",
+      text: site.address.street,
+      href: site.address.map.linkUrl,
+      tone: "bg-emerald-500/15 text-emerald-600",
+    },
+  ];
+
   return (
-    <section id="price" className="scroll-mt-20 py-14 sm:py-20 lg:py-24">
+    <section id="price" className="scroll-mt-20 bg-plaster pb-14 sm:pb-20">
       <div className="shell">
-        <h2 data-reveal-item className="display-lg max-w-2xl text-balance">Стоимость услуги</h2>
-        <p data-reveal-item className="prose-measure mt-4 text-base text-muted-foreground sm:mt-5 sm:text-lg">
-          Одна сумма за полное оформление европротокола на месте ДТП: выезд, осмотр, фотофиксация
-          и документы для страховой.
-        </p>
+        <div
+          data-reveal-item
+          className="brand-gradient panel rounded-2xl px-5 py-10 text-white sm:px-8 sm:py-12 lg:px-12"
+        >
+          <h2 className="display-caps text-center text-[clamp(1.4rem,3.2vw,2rem)]">
+            Услуги европротокола
+          </h2>
 
-        <div className="mt-8 grid gap-4 sm:mt-12 sm:gap-5 lg:grid-cols-[1.25fr_0.75fr]">
-          <div data-reveal-item className="rounded-xl border border-border bg-card p-6 sm:p-7 lg:p-9">
-            <p className="font-display text-4xl font-bold tracking-tight tnum lg:text-5xl">
-              {formatSum(pricing.price)}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">{pricing.unit}</p>
+          <p className="mt-6 text-center text-xs text-white/60">{pricing.unit}</p>
+          <p className="text-center font-display text-[clamp(2rem,6vw,3.25rem)] font-bold tracking-tight tnum">
+            {formatSum(pricing.price)}
+          </p>
 
-            <h3 className="display-sm mt-8 border-t border-border pt-7">Что входит в цену</h3>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-              {pricing.includes.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-[15px]">
-                  <Check className="mt-0.5 size-4 shrink-0 text-tile" strokeWidth={2.5} />
-                  {item}
-                </li>
-              ))}
-            </ul>
+          <p className="mt-5 text-center font-display text-base font-bold uppercase leading-snug tracking-tight sm:text-lg">
+            Мы работаем круглосуточно
+            <br />
+            <span className="text-accent">с нами — просто и быстро</span>
+          </p>
 
-            <h3 className="display-sm mt-8 border-t border-border pt-7">
-              Оплачивается отдельно
-            </h3>
-            <ul className="mt-5 flex flex-col gap-3">
-              {pricing.extras.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
-                  <Plus className="mt-0.5 size-4 shrink-0" strokeWidth={2.5} />
-                  {item}
-                </li>
-              ))}
-            </ul>
+          <div className="mt-9 grid gap-8 md:grid-cols-2 md:gap-10">
+            <div>
+              <h3 className="display-sm">Что входит в цену</h3>
+              <ul className="mt-4 flex flex-col gap-2.5">
+                {pricing.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-white/85">
+                    <Check className="mt-0.5 size-4 shrink-0 text-accent" strokeWidth={2.5} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            <p className="mt-8 rounded-lg bg-secondary p-4 text-sm text-muted-foreground">
-              {pricing.note}
-            </p>
+            <div>
+              <h3 className="display-sm">Оплачивается отдельно</h3>
+              <ul className="mt-4 flex flex-col gap-2.5">
+                {pricing.extras.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-white/70">
+                    <Plus className="mt-0.5 size-4 shrink-0" strokeWidth={2.5} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-5 rounded-lg bg-white/8 p-4 text-sm leading-relaxed text-white/70">
+                {pricing.note}
+              </p>
+            </div>
           </div>
 
-          <div className="flex flex-col gap-5">
-            <div
-              data-reveal-item
-              style={{ "--reveal-shift": "7%" } as React.CSSProperties}
-              className="brand-gradient brand-edge rounded-xl p-6 text-white sm:p-7"
-            >
-              <p className="display-sm">Нужен комиссар сейчас</p>
-              <p className="mt-2 text-sm text-white/75">
-                Позвоните — экипаж выедет сразу, в среднем доезжаем за {site.contacts.arrival}.
-              </p>
-              <Button
-                asChild
-                size="lg"
-                className="pulse-call lift mt-6 w-full bg-accent text-accent-foreground hover:bg-accent/90"
-              >
-                <a href={`tel:${site.contacts.phone}`}>
-                  <Phone className="size-4" />
-                  {site.contacts.phoneLabel}
+          <ul className="mt-9 grid gap-3 sm:grid-cols-3">
+            {contacts.map((c) => (
+              <li key={c.title}>
+                <a
+                  href={c.href}
+                  className="lift flex h-full flex-col gap-2 rounded-xl bg-card p-5 text-card-foreground"
+                >
+                  <span className={`flex size-9 items-center justify-center rounded-lg ${c.tone}`}>
+                    <c.icon className="size-4" strokeWidth={2.5} />
+                  </span>
+                  <span className="font-display text-sm font-bold">{c.title}</span>
+                  <span className="text-xs leading-relaxed text-muted-foreground">{c.text}</span>
                 </a>
-              </Button>
-            </div>
-
-            <div
-              data-reveal-item
-              style={{ "--reveal-shift": "14%" } as React.CSSProperties}
-              className="rounded-xl border border-border bg-card p-6 sm:p-7"
-            >
-              <p className="display-sm">Где мы находимся</p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Диспетчерская работает круглосуточно. Приезжать к нам не нужно — комиссар сам
-                выезжает на место ДТП.
-              </p>
-              <YandexMap className="mt-6" />
-            </div>
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
