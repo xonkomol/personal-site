@@ -1,14 +1,17 @@
 import { Clock, ShieldCheck, Handshake } from "lucide-react";
-import { site } from "@/lib/site.config";
+import { getContent } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
 
 const icons = { clock: Clock, shield: ShieldCheck, handshake: Handshake } as const;
 
-export function Advantages() {
+export function Advantages({ locale }: { locale: Locale }) {
+  const t = getContent(locale);
+
   return (
     <section id="advantages" className="scroll-mt-20 bg-plaster py-14 sm:py-20">
       <div className="shell">
         <ul className="panel grid gap-4 sm:gap-5 md:grid-cols-3">
-          {site.advantages.map((item, i) => {
+          {t.advantages.map((item, i) => {
             const Icon = icons[item.icon];
             return (
               <li

@@ -12,22 +12,27 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { site } from "@/lib/site.config";
+import { getContent } from "@/lib/content";
+import { localePath, type Locale } from "@/lib/i18n";
 
-const nav = [
-  { label: "Преимущества", href: "/#advantages" },
-  { label: "Как оформить", href: "/#how-to" },
-  { label: "Стоимость", href: "/#price" },
-  { label: "Контакты", href: "/#contacts" },
-];
-
-export function SiteHeader() {
+export function SiteHeader({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
+  const t = getContent(locale);
+  const home = localePath(locale);
+
+  const nav = [
+    { label: t.nav.advantages, href: `${home}#advantages` },
+    { label: t.nav.howTo, href: `${home}#how-to` },
+    { label: t.nav.price, href: `${home}#price` },
+    { label: t.nav.contacts, href: `${home}#contacts` },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
-      <div className="shell flex h-16 items-center justify-between gap-6 lg:h-20">
-        <Link href="/" aria-label={`${site.brand.name} — на главную`}>
+      <div className="shell flex h-16 items-center justify-between gap-4 lg:h-20 lg:gap-6">
+        <Link href={home} aria-label={t.header.home}>
           <Image
             src={site.brand.logo}
             alt={site.brand.logoAlt}
@@ -39,8 +44,8 @@ export function SiteHeader() {
           />
         </Link>
 
-        <nav aria-label="Основные разделы" className="hidden lg:block">
-          <ul className="flex items-center gap-7 text-sm">
+        <nav aria-label={t.header.sections} className="hidden lg:block">
+          <ul className="flex items-center gap-6 text-sm">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
@@ -55,20 +60,26 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher locale={locale} label={t.header.language} />
+
           <a
             href={`tel:${site.contacts.phone}`}
-            className="hidden font-display text-base font-bold tracking-tight tnum md:block"
+            className="hidden font-display text-base font-bold tracking-tight tnum xl:block"
           >
             {site.contacts.phoneLabel}
           </a>
-          <Button asChild size="sm" className="hidden bg-accent text-accent-foreground hover:bg-accent/90 md:inline-flex">
+          <Button
+            asChild
+            size="sm"
+            className="hidden bg-accent text-accent-foreground hover:bg-accent/90 md:inline-flex"
+          >
             <a href={site.contacts.telegram}>
               <Send className="size-4" />
               Telegram
             </a>
           </Button>
 
-          <Button asChild size="icon" variant="outline" className="md:hidden" aria-label="Позвонить">
+          <Button asChild size="icon" variant="outline" className="md:hidden" aria-label={t.header.call}>
             <a href={`tel:${site.contacts.phone}`}>
               <Phone className="size-4" />
             </a>
@@ -76,7 +87,7 @@ export function SiteHeader() {
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button size="icon" variant="outline" className="lg:hidden" aria-label="Открыть меню">
+              <Button size="icon" variant="outline" className="lg:hidden" aria-label={t.header.openMenu}>
                 <Menu className="size-4" />
               </Button>
             </SheetTrigger>
@@ -84,7 +95,7 @@ export function SiteHeader() {
               <SheetHeader>
                 <SheetTitle className="font-display">{site.brand.name}</SheetTitle>
               </SheetHeader>
-              <nav aria-label="Разделы сайта" className="px-4">
+              <nav aria-label={t.header.siteSections} className="px-4">
                 <ul className="flex flex-col gap-1">
                   {nav.map((item) => (
                     <li key={item.href}>
@@ -109,7 +120,7 @@ export function SiteHeader() {
                 <Button asChild size="lg" variant="outline">
                   <a href={site.contacts.telegram}>
                     <Send className="size-4" />
-                    Написать в Telegram
+                    {t.header.writeTelegram}
                   </a>
                 </Button>
               </div>

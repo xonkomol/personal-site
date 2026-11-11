@@ -381,5 +381,33 @@ export const keywords = [
   "страхование автомобиля с моментальной выдачей полиса",
 ] as const;
 
+/** Профиль сайта на узбекском. */
+export const uzServiceKeywords = [
+  "yevroprotokol Toshkent",
+  "yevroprotokol rasmiylashtirish",
+  "yevroprotokol narxi",
+  "yevroprotokol 24/7",
+  "avariya komissari Toshkent",
+  "avariya komissari chaqirish",
+  "avtokomissar Toshkent",
+  "YHH rasmiylashtirish Toshkent",
+  "YPX chaqirmasdan YHH rasmiylashtirish",
+  "YHH xabarnomasi to'ldirish",
+  "zarar baholash Toshkent",
+  "zarar ekspertizasi YHH",
+  "avtomobil zararini baholash",
+  "sug'urta to'lovi YHH",
+  "OSAGO to'lovi Toshkent",
+  "adjaster Toshkent",
+  "YHH bo'lganda nima qilish kerak",
+  "yevroprotokol shartlari",
+  "yevroprotokol chegarasi 28 mln",
+] as const;
+
 /** Итоговый список без повторов: профиль сайта идёт первым. */
 export const allKeywords: string[] = [...new Set([...serviceKeywords, ...keywords])];
+
+/** Узбекская версия: сначала профиль, затем общий автострахованный кластер. */
+export const allUzKeywords: string[] = [
+  ...new Set([...uzServiceKeywords, ...serviceKeywords, ...keywords]),
+];
