@@ -1,7 +1,11 @@
 import { ImageResponse } from "next/og";
-import { site, formatSum } from "@/lib/site.config";
+import { site } from "@/lib/site.config";
+import { getContent } from "@/lib/content";
+import { defaultLocale, formatSum } from "@/lib/i18n";
 
-export const alt = `${site.brand.name} — ${site.brand.offer}`;
+const t = getContent(defaultLocale);
+
+export const alt = `${site.brand.name} — ${t.offer}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,7 +20,7 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0b1f33",
+          background: "#081c47",
           padding: "72px",
           color: "#ffffff",
           fontFamily: "sans-serif",
@@ -24,23 +28,17 @@ export default function OpengraphImage() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 32 }}>
           <div
-            style={{
-              display: "flex",
-              width: 48,
-              height: 48,
-              borderRadius: 12,
-              background: "#0b7cb0",
-            }}
+            style={{ display: "flex", width: 48, height: 48, borderRadius: 12, background: "#0b7cb0" }}
           />
           <span style={{ fontWeight: 700 }}>{site.brand.name}</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05, letterSpacing: -2 }}>
-            {site.brand.offer}
+          <div style={{ fontSize: 68, fontWeight: 700, lineHeight: 1.05, letterSpacing: -2 }}>
+            {t.offer}
           </div>
           <div style={{ fontSize: 30, color: "rgba(255,255,255,0.75)" }}>
-            {`Аварийный комиссар · ${site.contacts.hoursLabel} · выплата до ${formatSum(site.payoutLimit)}`}
+            {`${t.hoursLabel} · ${formatSum(site.payoutLimit, defaultLocale)}`}
           </div>
         </div>
 
@@ -48,8 +46,8 @@ export default function OpengraphImage() {
           <div
             style={{
               display: "flex",
-              background: "#e59216",
-              color: "#231201",
+              background: "#e8a21c",
+              color: "#231501",
               padding: "16px 28px",
               borderRadius: 14,
               fontSize: 36,

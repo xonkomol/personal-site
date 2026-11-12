@@ -1,32 +1,25 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site.config";
-import { canonical } from "@/lib/seo";
 
 /**
  * robots.txt. Ничего содержательного не закрываем: поисковику нужен доступ
  * и к /_next/static, иначе он не отрисует страницу и занизит оценку.
  */
 export default function robots(): MetadataRoute.Robots {
+  const base = site.url.replace(/\/$/, "");
+
   return {
     rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-      {
-        // Отдельная секция для Яндекса: он читает директиву Host из неё.
-        userAgent: "Yandex",
-        allow: "/",
-        disallow: ["/api/"],
-      },
+      { userAgent: "*", allow: "/" },
+      // Отдельная секция для Яндекса: он читает директиву Host из неё.
+      { userAgent: "Yandex", allow: "/" },
       {
         // Боты, которые качают сайт целиком и не приводят трафик.
         userAgent: ["AhrefsBot", "SemrushBot", "MJ12bot", "DotBot", "PetalBot"],
         disallow: "/",
       },
     ],
-    sitemap: canonical("/sitemap.xml"),
-    host: site.url,
+    sitemap: `${base}/sitemap.xml`,
+    host: base,
   };
 }

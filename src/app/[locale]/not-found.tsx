@@ -11,6 +11,7 @@ import { defaultLocale, localePath } from "@/lib/i18n";
 const locale = defaultLocale;
 
 export const metadata = {
+  metadataBase: new URL(site.url),
   title: getContent(locale).seo.notFoundTitle,
   robots: { index: false, follow: true },
 };

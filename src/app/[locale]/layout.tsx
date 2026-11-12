@@ -36,7 +36,8 @@ export async function generateMetadata({
   params,
 }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const { locale } = await params;
-  if (!isLocale(locale)) return {};
+  // Оболочка PPR рендерится без разобранного параметра — отдаём только базу.
+  if (!isLocale(locale)) return { metadataBase: new URL(site.url) };
   const t = getContent(locale);
 
   return {

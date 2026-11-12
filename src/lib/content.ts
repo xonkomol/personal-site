@@ -1,4 +1,4 @@
-import { allKeywords, allUzKeywords } from "./keywords";
+import { keywords } from "./keywords";
 import type { Locale } from "./i18n";
 
 /**
@@ -241,20 +241,10 @@ const ru = {
     title: "Европротокол в Ташкенте 24/7 — Adjaster.uz",
     description:
       "Аварийный комиссар в Ташкенте круглосуточно. Оформляем европротокол на месте ДТП за 30 минут, без вызова ГАИ. Выплата по ОСАГО до 28 млн сум. Звоните +998 95 078 46 65.",
-    keywords: allKeywords,
+    keywords,
     districtTitle: (inCity: string) => `Европротокол в ${inCity} — Adjaster.uz`,
     districtDescription: (inCity: string, limit: string) =>
       `Аварийный комиссар в ${inCity} Ташкента круглосуточно. Оформление европротокола на месте ДТП за 30 минут, выплата до ${limit}. Звоните +998 95 078 46 65.`,
-    districtKeywords: (short: string, name: string) => [
-      `европротокол ${short}`,
-      `европротокол ${name}`,
-      `аварийный комиссар ${short}`,
-      `аварийный комиссар ${name}`,
-      `вызвать аварийного комиссара ${short}`,
-      `оформление ДТП ${short}`,
-      `оценка ущерба ${short}`,
-      `помощь при ДТП ${short}`,
-    ],
     notFoundTitle: "Страница не найдена",
   },
 
@@ -560,20 +550,10 @@ const uz: Dict = {
     title: "Toshkentda yevroprotokol 24/7 — Adjaster.uz",
     description:
       "Toshkentda avariya komissari kecha-kunduz. Yevroprotokolni YHH joyida 30 daqiqada, YPX chaqirmasdan rasmiylashtiramiz. OSAGO bo'yicha to'lov 28 mln so'mgacha. Qo'ng'iroq qiling: +998 95 078 46 65.",
-    keywords: allUzKeywords,
+    keywords,
     districtTitle: (inCity: string) => `${inCity} yevroprotokol — Adjaster.uz`,
     districtDescription: (inCity: string, limit: string) =>
       `Toshkentning ${inCity} avariya komissari kecha-kunduz. YHH joyida yevroprotokolni 30 daqiqada rasmiylashtirish, ${limit} gacha to'lov. Qo'ng'iroq: +998 95 078 46 65.`,
-    districtKeywords: (short: string, name: string) => [
-      `yevroprotokol ${short}`,
-      `yevroprotokol ${name}`,
-      `avariya komissari ${short}`,
-      `avariya komissari ${name}`,
-      `avariya komissari chaqirish ${short}`,
-      `YHH rasmiylashtirish ${short}`,
-      `zarar baholash ${short}`,
-      `YHH yordam ${short}`,
-    ],
     notFoundTitle: "Sahifa topilmadi",
   },
 

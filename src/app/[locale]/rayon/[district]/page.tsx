@@ -35,10 +35,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/rayon/[district]">) {
   const { locale, district: slug } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isLocale(locale)) return { metadataBase: new URL(site.url) };
   const t = getContent(locale);
   const district = getDistrict(locale, slug);
-  if (!district) return {};
+  if (!district) return { metadataBase: new URL(site.url) };
 
   return pageMetadata({
     locale,
@@ -49,11 +49,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/rayon/[d
       formatSum(site.payoutLimit, locale)
     ),
     path: `/rayon/${slug}`,
-    keywords: [
-      ...t.seo.districtKeywords(district.short, district.name),
-      ...district.landmarks.map((l) => `${t.footer.services[1]} ${l}`),
-      ...t.seo.keywords,
-    ],
+    keywords: t.seo.keywords,
   });
 }
 
