@@ -48,7 +48,6 @@ npm run dev
 
 | Где | Что |
 |---|---|
-| `src/lib/site.config.ts` → `pricing.assessment` | **1 500 000 сум за оценку ущерба — плейсхолдер.** Поставьте свою цену. Цена европротокола (880 000 сум) согласована. |
 | `src/lib/site.config.ts` → `contacts`, `address` | Телефоны, Telegram, email и адреса взяты из открытых источников — сверьте. |
 | `.env.local` → `NEXT_PUBLIC_SITE_URL` | Боевой домен. От него зависят canonical, sitemap и микроразметка. |
 | `src/lib/site.config.ts` → `address.coords` | **Координаты приблизительные.** Уточните в Яндекс Картах: правый клик по метке → «Что здесь?». Они идут в микроразметку `LocalBusiness`. |
